@@ -341,7 +341,14 @@ PLIC_ThresholdIRQ_TypeDef PLIC_GetThresholdIRQ(void)
  */
 IRQn_TypeDef PLIC_ClaimIRQ(void)
 {
-    return (IRQn_TypeDef)(*(volatile uint32_t*)(PLIC_ICR));
+    uint32_t TmpReg;
+    TmpReg = (*(volatile uint32_t*)(PLIC_ICR));
+
+    if (TmpReg == 0) {
+        return (IRQn_TypeDef)0;
+    } else {
+        return (IRQn_TypeDef)(TmpReg - 1);
+    }
 }
 
 /**
@@ -358,6 +365,77 @@ void PLIC_CompleteIRQ(IRQn_TypeDef IRQn)
     TmpReg = IRQn + 1;
 
     *(volatile uint32_t*)(PLIC_ICR) = TmpReg;
+}
+
+/**
+ * @brief  Set trap vector.
+ * @param  Privilege: @ref PLIC_PrivilegeIRQ_TypeDef - interrupt privilege mode.
+ * @param  TrapVector: @ref IRQHandler_TypeDef - trap vector.
+ * @return None.
+ */
+void PLIC_SetTrapVector(PLIC_PrivilegeIRQ_TypeDef Privilege, IRQHandler_TypeDef TrapVector)
+{
+    /* Check the parameters. */
+    assert_param(IS_PLIC_PRIVILEGE_IRQ(Privilege));
+    assert_param(IS_PLIC_xTVEC_ALIGNED(TrapVector));
+
+    switch (Privilege) {
+#if defined(PLIC_PRIVILEGE_LEVEL) && ((PLIC_PRIVILEGE_LEVEL & CORE_PRIVILEGE_MODE_MACHINE) != 0)
+        case PLIC_PRIVILEGE_IRQ_MODE_M:
+            csr_clear_bits(CSR_MTVEC, CSR_xTVEC_NBASE_Msk);
+            csr_set_bits(CSR_MTVEC, (uint32_t)TrapVector & CSR_xTVEC_NBASE_Msk);
+            break;
+#endif /* CORE_PRIVILEGE_LEVEL_MACHINE */
+
+#if defined(PLIC_PRIVILEGE_LEVEL) && ((PLIC_PRIVILEGE_LEVEL & CORE_PRIVILEGE_MODE_SUPERVISOR) != 0)
+        case PLIC_PRIVILEGE_IRQ_MODE_S:
+            csr_clear_bits(CSR_STVEC, CSR_xTVEC_NBASE_Msk);
+            csr_set_bits(CSR_STVEC, (uint32_t)TrapVector & CSR_xTVEC_NBASE_Msk);
+            break;
+#endif /* CORE_PRIVILEGE_LEVEL_SUPERVISOR */
+
+#if defined(PLIC_PRIVILEGE_LEVEL) && ((PLIC_PRIVILEGE_LEVEL & CORE_PRIVILEGE_MODE_USER) != 0)
+        case PLIC_PRIVILEGE_IRQ_MODE_U:
+            csr_clear_bits(CSR_UTVEC, CSR_xTVEC_NBASE_Msk);
+            csr_set_bits(CSR_UTVEC, (uint32_t)TrapVector & CSR_xTVEC_NBASE_Msk);
+            break;
+#endif /* CORE_PRIVILEGE_LEVEL_USER */
+    }
+}
+
+/**
+ * @brief  Get trap vector.
+ * @param  Privilege: @ref PLIC_PrivilegeIRQ_TypeDef - interrupt privilege mode.
+ * @return @ref IRQHandler_TypeDef - trap vector.
+ */
+IRQHandler_TypeDef PLIC_GetTrapVector(PLIC_PrivilegeIRQ_TypeDef Privilege)
+{
+    /* Check the parameters. */
+    assert_param(IS_PLIC_PRIVILEGE_IRQ(Privilege));
+
+    IRQHandler_TypeDef TrapVector = (IRQHandler_TypeDef)0;
+
+    switch (Privilege) {
+#if defined(PLIC_PRIVILEGE_LEVEL) && ((PLIC_PRIVILEGE_LEVEL & CORE_PRIVILEGE_MODE_MACHINE) != 0)
+        case PLIC_PRIVILEGE_IRQ_MODE_M:
+            TrapVector = (IRQHandler_TypeDef)(csr_read(CSR_MTVEC) & CSR_xTVEC_NBASE_Msk);
+            break;
+#endif /* CORE_PRIVILEGE_LEVEL_MACHINE */
+
+#if defined(PLIC_PRIVILEGE_LEVEL) && ((PLIC_PRIVILEGE_LEVEL & CORE_PRIVILEGE_MODE_SUPERVISOR) != 0)
+        case PLIC_PRIVILEGE_IRQ_MODE_S:
+            TrapVector = (IRQHandler_TypeDef)(csr_read(CSR_STVEC) & CSR_xTVEC_NBASE_Msk);
+            break;
+#endif /* CORE_PRIVILEGE_LEVEL_SUPERVISOR */
+
+#if defined(PLIC_PRIVILEGE_LEVEL) && ((PLIC_PRIVILEGE_LEVEL & CORE_PRIVILEGE_MODE_USER) != 0)
+        case PLIC_PRIVILEGE_IRQ_MODE_U:
+            TrapVector = (IRQHandler_TypeDef)(csr_read(CSR_UTVEC) & CSR_xTVEC_NBASE_Msk);
+            break;
+#endif /* CORE_PRIVILEGE_LEVEL_USER */
+    }
+
+    return TrapVector;
 }
 
 /** @} */ /* End of group CORE_PLIC_Exported_Functions */

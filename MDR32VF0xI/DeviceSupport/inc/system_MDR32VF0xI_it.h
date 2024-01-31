@@ -172,12 +172,12 @@ __WEAK __INTERRUPT_MACHINE __TRAP_HANDLER_ALIGNED void Trap_IRQHandler(void);
 /**
  * @brief IT interrupt handlers.
  */
-__WEAK void MachineSoftware_IRQHandler(void);
-__WEAK void MachineTimer_IRQHandler(void);
+__WEAK void MSIP_IRQHandler(void);
+__WEAK void MTIP_IRQHandler(void);
 #if defined(USE_MDR1206)
-__WEAK void UserSoftware_IRQHandler(void);
-__WEAK void UserTimer_IRQHandler(void);
-__WEAK void CLICSoftware_IRQHandler(void);
+__WEAK void USIP_IRQHandler(void);
+__WEAK void UTIP_IRQHandler(void);
+__WEAK void CSIP_IRQHandler(void);
 #endif
 __WEAK void DMA_IRQHandler(void);
 __WEAK void UART1_IRQHandler(void);
@@ -193,11 +193,11 @@ __WEAK void BKP_IRQHandler(void);
 __WEAK void EXT_INT1_IRQHandler(void);
 __WEAK void EXT_INT2_IRQHandler(void);
 __WEAK void EXT_INT3_IRQHandler(void);
-__WEAK void ADCIU_F1_IRQHandler(void);
-__WEAK void ADCIU_F2_IRQHandler(void);
-__WEAK void ADCIU_F03_IRQHandler(void);
+__WEAK void ADCUI_F1_IRQHandler(void);
+__WEAK void ADCUI_F2_IRQHandler(void);
+__WEAK void ADCUI_F03_IRQHandler(void);
 __WEAK void RANDOM_IRQHandler(void);
-__WEAK void ISO7816_IRQHandler(void);
+__WEAK void USART_IRQHandler(void);
 __WEAK void UART3_IRQHandler(void);
 __WEAK void SSP2_IRQHandler(void);
 __WEAK void SSP3_IRQHandler(void);

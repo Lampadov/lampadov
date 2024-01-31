@@ -206,6 +206,7 @@ typedef enum {
 #if defined(USE_MDR32F02)
 #define PLIC_PRESENT         1U                            /*!< PLIC present or not. */
 #define PLIC_NUM_INTERRUPTS  32U                           /*!< PLIC number of interrupts. */
+#define PLIC_xTVEC_ALIGN     2                             /*!< PLIC trap vector base address alignment in xTVEC. */
 #define PLIC_PRIVILEGE_LEVEL (CORE_PRIVILEGE_MODE_MACHINE) /*!< PLIC number privilege modes. */
 #define PLIC_BASE            0x0C000000UL                  /*!< PLIC base address. */
 #endif

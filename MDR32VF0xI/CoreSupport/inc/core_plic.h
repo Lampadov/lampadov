@@ -52,19 +52,91 @@ extern "C" {
 #warning "PLIC_NUM_INTERRUPTS not defined in device header file; using default value: 32."
 #endif
 
+#ifndef PLIC_xTVEC_ALIGN
+#define PLIC_xTVEC_ALIGN 2U
+#warning "PLIC_xTVEC_ALIGN not defined in device header file; using default value: 2."
+#endif
+
 /** @} */ /* End of group CORE_PLIC_Configuration */
 
 /** @defgroup CORE_PLIC_Exported_Defines Core PLIC Exported Defines
  * @{
  */
 
-#define PLIC_ISP(IRQn) ((PLIC_BASE + 4) + (IRQn * 4)) /*!< PLIC Interrupt Source Priority. */
-#define PLIC_IPB       (PLIC_BASE + 0x1000)           /*!< PLIC Interrupt Pending Bits. */
-#define PLIC_IEB       (PLIC_BASE + 0x2000)           /*!< PLIC Interrupt Enable Bits. */
-#define PLIC_PTHR      (PLIC_BASE + 0x200000)         /*!< PLIC Priority Threshold. */
-#define PLIC_ICR       (PLIC_BASE + 0x200004)         /*!< PLIC Interrupt Claim Register and Interrupt Completion. */
+#define PLIC_VECTOR_MASK             ((0xFFFFFFFFUL >> PLIC_xTVEC_ALIGN) << PLIC_xTVEC_ALIGN)
+#define PLIC_VECTOR_ALIGN            (1U << PLIC_xTVEC_ALIGN)
+
+#define IS_PLIC_xTVEC_ALIGNED(xTVEC) (((uint32_t)(xTVEC) & ~PLIC_VECTOR_MASK) == 0)
+#define IS_PLIC_xTVT_ALIGNED(xTVT)      (((uint32_t)(xTVT) & ~PLIC_VECTOR_MASK)) == 0)
+#define __TRAP_HANDLER_ALIGNED __attribute__((aligned(PLIC_VECTOR_ALIGN)))
+
+#define PLIC_ISP(IRQn)         ((PLIC_BASE + 4) + (IRQn * 4)) /*!< PLIC Interrupt Source Priority. */
+#define PLIC_IPB               (PLIC_BASE + 0x1000)           /*!< PLIC Interrupt Pending Bits. */
+#define PLIC_IEB               (PLIC_BASE + 0x2000)           /*!< PLIC Interrupt Enable Bits. */
+#define PLIC_PTHR              (PLIC_BASE + 0x200000)         /*!< PLIC Priority Threshold. */
+#define PLIC_ICR               (PLIC_BASE + 0x200004)         /*!< PLIC Interrupt Claim Register and Interrupt Completion. */
 
 /** @} */ /* End of group CORE_PLIC_Exported_Defines */
+
+/** @defgroup CORE_PLIC_CSR_MCAUSE PLIC CSR MCAUSE
+ * @{
+ */
+
+#define CSR_MCAUSE_EXCCODE_Pos     0
+#define CSR_MCAUSE_EXCCODE_Msk     (0x7FFFFFFFUL << CSR_MCAUSE_EXCCODE_Pos)
+
+#define CSR_MCAUSE_EXCCODE_MEI_Pos CSR_MCAUSE_EXCCODE_Pos
+#define CSR_MCAUSE_EXCCODE_MEI_Msk (0xBUL << CSR_MCAUSE_EXCCODE_MEI_Pos)
+#define CSR_MCAUSE_EXCCODE_MEI     CSR_MCAUSE_EXCCODE_MEI_Msk
+
+#define CSR_MCAUSE_INTERRUPT_Pos   31
+#define CSR_MCAUSE_INTERRUPT_Msk   (0x1UL << CSR_MCAUSE_INTERRUPT_Pos)
+#define CSR_MCAUSE_INTERRUPT       CSR_MCAUSE_INTERRUPT_Msk
+
+/** @} */ /* End of group CORE_PLIC_CSR_MCAUSE */
+
+/** @defgroup CORE_PLIC_CSR_SCAUSE PLIC CSR SCAUSE
+ * @{
+ */
+
+#define CSR_SCAUSE_EXCCODE_Pos     0
+#define CSR_SCAUSE_EXCCODE_Msk     (0x7FFFFFFFUL << CSR_SCAUSE_EXCCODE_Pos)
+
+#define CSR_SCAUSE_EXCCODE_MEI_Pos 11
+#define CSR_SCAUSE_EXCCODE_MEI_Msk (0xBUL << CSR_SCAUSE_EXCCODE_MEI_Pos)
+#define CSR_SCAUSE_EXCCODE_MEI     CSR_SCAUSE_EXCCODE_MEI_Msk
+
+#define CSR_SCAUSE_INTERRUPT_Pos   31
+#define CSR_SCAUSE_INTERRUPT_Msk   (0x1UL << CSR_SCAUSE_INTERRUPT_Pos)
+#define CSR_SCAUSE_INTERRUPT       CSR_SCAUSE_INTERRUPT_Msk
+
+/** @} */ /* End of group CORE_PLIC_CSR_SCAUSE */
+
+/** @defgroup CORE_PLIC_CSR_UCAUSE PLIC CSR UCAUSE
+ * @{
+ */
+
+#define CSR_UCAUSE_EXCCODE_Pos     0
+#define CSR_UCAUSE_EXCCODE_Msk     (0x7FFFFFFFUL << CSR_UCAUSE_EXCCODE_Pos)
+
+#define CSR_UCAUSE_EXCCODE_MEI_Pos 11
+#define CSR_UCAUSE_EXCCODE_MEI_Msk (0xBUL << CSR_UCAUSE_EXCCODE_MEI_Pos)
+#define CSR_UCAUSE_EXCCODE_MEI     CSR_UCAUSE_EXCCODE_MEI_Msk
+
+#define CSR_UCAUSE_INTERRUPT_Pos   31
+#define CSR_UCAUSE_INTERRUPT_Msk   (0x1UL << CSR_UCAUSE_INTERRUPT_Pos)
+#define CSR_UCAUSE_INTERRUPT       CSR_UCAUSE_INTERRUPT_Msk
+
+/** @} */ /* End of group CORE_PLIC_CSR_UCAUSE */
+
+/** @defgroup CORE_PLIC_CSR_xTVEC PLIC CSR xTVEC
+ * @{
+ */
+
+#define CSR_xTVEC_NBASE_Pos PLIC_xTVEC_ALIGN
+#define CSR_xTVEC_NBASE_Msk PLIC_VECTOR_MASK
+
+/** @} */ /* End of group CORE_PLIC_CSR_xTVEC */
 
 /** @defgroup CORE_PLIC_CSR_MIE PLIC CSR MIE
  * @{
@@ -311,6 +383,9 @@ PLIC_ThresholdIRQ_TypeDef PLIC_GetThresholdIRQ(void);
 
 IRQn_TypeDef PLIC_ClaimIRQ(void);
 void         PLIC_CompleteIRQ(IRQn_TypeDef IRQn);
+
+void               PLIC_SetTrapVector(PLIC_PrivilegeIRQ_TypeDef Privilege, IRQHandler_TypeDef TrapVector);
+IRQHandler_TypeDef PLIC_GetTrapVector(PLIC_PrivilegeIRQ_TypeDef Privilege);
 
 /** @} */ /* End of the group CORE_PLIC_Exported_Functions */
 

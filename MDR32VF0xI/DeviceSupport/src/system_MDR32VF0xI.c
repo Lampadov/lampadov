@@ -126,7 +126,7 @@ void SystemCoreClockUpdate(void)
 
 /**
  * @brief  Setup the microcontroller system:
- *          - RST clock configuration to the default reset state; 
+ *          - RST clock configuration to the default reset state;
  *          - SystemCoreClock variable;
  *          - interrupt configuration.
  * @note   This function should be used only after reset.
@@ -140,7 +140,7 @@ void SystemInit(void)
 #endif
 
 #if defined(USE_MDR32F02)
-    // TODO - PLIC Set Trap_IRQHandler
+    PLIC_SetTrapVector(PLIC_PRIVILEGE_IRQ_MODE_M, Trap_IRQHandler);
     IT_GlobalEnableIRQ();
 #elif defined(USE_MDR1206)
     CLIC_StructInit(&CLIC_InitStruct);

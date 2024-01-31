@@ -65,62 +65,62 @@ IRQHandler_TypeDef ExceptionVectorTable[] = {
  */
 #if defined(USE_MDR32F02)
 IRQHandler_TypeDef InterruptVectorTable[] = {
-    Unexpected_IRQHandler,      // 0: Reserved
-    Unexpected_IRQHandler,      // 1: Reserved
-    Unexpected_IRQHandler,      // 2: Reserved
-    MachineSoftware_IRQHandler, // 3: Machine Software Interrupt
-    Unexpected_IRQHandler,      // 4: Reserved
-    Unexpected_IRQHandler,      // 5: Reserved
-    Unexpected_IRQHandler,      // 6: Reserved
-    MachineTimer_IRQHandler     // 7: Machine Timer Interrupt
+    Unexpected_IRQHandler, // 0: Reserved
+    Unexpected_IRQHandler, // 1: Reserved
+    Unexpected_IRQHandler, // 2: Reserved
+    MSIP_IRQHandler,       // 3: Machine Software Interrupt
+    Unexpected_IRQHandler, // 4: Reserved
+    Unexpected_IRQHandler, // 5: Reserved
+    Unexpected_IRQHandler, // 6: Reserved
+    MTIP_IRQHandler        // 7: Machine Timer Interrupt
 };
 #elif defined(USE_MDR1206)
 __VECTOR_TABLE_ALIGNED IRQHandler_TypeDef InterruptVectorTable[] = {
-    UserSoftware_IRQHandler,    // 0:  User Software Interrupt
-    Unexpected_IRQHandler,      // 1:  Reserved
-    Unexpected_IRQHandler,      // 2:  Reserved
-    MachineSoftware_IRQHandler, // 3:  Machine Software Interrupt
-    UserTimer_IRQHandler,       // 4:  User Timer Interrupt
-    Unexpected_IRQHandler,      // 5:  Reserved
-    Unexpected_IRQHandler,      // 6:  Reserved
-    MachineTimer_IRQHandler,    // 7:  Machine Timer Interrupt
-    Unexpected_IRQHandler,      // 8:  Reserved
-    Unexpected_IRQHandler,      // 9:  Reserved
-    Unexpected_IRQHandler,      // 10: Reserved
-    Unexpected_IRQHandler,      // 11: Reserved
-    CLICSoftware_IRQHandler,    // 12: CLIC Software Interrupt
-    Unexpected_IRQHandler,      // 13: Reserved
-    Unexpected_IRQHandler,      // 14: Reserved
-    Unexpected_IRQHandler,      // 15: Reserved
-    DMA_IRQHandler,             // 16: DMA Handler
-    UART1_IRQHandler,           // 17: UART1 Handler
-    UART2_IRQHandler,           // 18: UART2 Handler
-    SSP1_IRQHandler,            // 19: SSP1 Handler
-    POWER_IRQHandler,           // 20: POWER Handler
-    WWDG_IRQHandler,            // 21: WWDG Handler
-    TIMER1_IRQHandler,          // 22: TIMER1 Handler
-    TIMER2_IRQHandler,          // 23: TIMER2 Handler
-    ADC_IRQHandler,             // 24: ADC Handler
-    I2C_IRQHandler,             // 25: I2C Handler
-    BKP_IRQHandler,             // 26: BKP and RTC Handler
-    EXT_INT1_IRQHandler,        // 27: EXT_INT1 Handler
-    EXT_INT2_IRQHandler,        // 28: EXT_INT2 Handler
-    EXT_INT3_IRQHandler,        // 29: EXT_INT3 Handler
-    ADCIU_F03_IRQHandler,       // 30: ADCIU_F03 Handler
-    ADCIU_F1_IRQHandler,        // 31: ADCIU_F1 Handler
-    ADCIU_F2_IRQHandler,        // 32: ADCIU_F2 Handler
-    Unexpected_IRQHandler,      // 33: Reserved
-    Unexpected_IRQHandler,      // 34: Reserved
-    Unexpected_IRQHandler,      // 35: Reserved
-    Unexpected_IRQHandler,      // 36: Reserved
-    RANDOM_IRQHandler,          // 37: RANDOM Handler
-    ISO7816_IRQHandler,         // 38: ISO7816 Handler
-    UART3_IRQHandler,           // 39: UART3 Handler
-    SSP2_IRQHandler,            // 40: SSP2 Handler
-    SSP3_IRQHandler,            // 41: SSP3 Handler
-    TIMER3_IRQHandler,          // 42: TIMER3 Handler
-    TIMER4_IRQHandler,          // 43: TIMER4 Handler
-    UART4_IRQHandler            // 44: UART4 Handler
+    USIP_IRQHandler,       // 0:  User Software Interrupt
+    Unexpected_IRQHandler, // 1:  Reserved
+    Unexpected_IRQHandler, // 2:  Reserved
+    MSIP_IRQHandler,       // 3:  Machine Software Interrupt
+    UTIP_IRQHandler,       // 4:  User Timer Interrupt
+    Unexpected_IRQHandler, // 5:  Reserved
+    Unexpected_IRQHandler, // 6:  Reserved
+    MTIP_IRQHandler,       // 7:  Machine Timer Interrupt
+    Unexpected_IRQHandler, // 8:  Reserved
+    Unexpected_IRQHandler, // 9:  Reserved
+    Unexpected_IRQHandler, // 10: Reserved
+    Unexpected_IRQHandler, // 11: Reserved
+    CSIP_IRQHandler,       // 12: CLIC Software Interrupt
+    Unexpected_IRQHandler, // 13: Reserved
+    Unexpected_IRQHandler, // 14: Reserved
+    Unexpected_IRQHandler, // 15: Reserved
+    DMA_IRQHandler,        // 16: DMA Handler
+    UART1_IRQHandler,      // 17: UART1 Handler
+    UART2_IRQHandler,      // 18: UART2 Handler
+    SSP1_IRQHandler,       // 19: SSP1 Handler
+    POWER_IRQHandler,      // 20: POWER Handler
+    WWDG_IRQHandler,       // 21: WWDG Handler
+    TIMER1_IRQHandler,     // 22: TIMER1 Handler
+    TIMER2_IRQHandler,     // 23: TIMER2 Handler
+    ADC_IRQHandler,        // 24: ADC Handler
+    I2C_IRQHandler,        // 25: I2C Handler
+    BKP_IRQHandler,        // 26: BKP and RTC Handler
+    EXT_INT1_IRQHandler,   // 27: EXT_INT1 Handler
+    EXT_INT2_IRQHandler,   // 28: EXT_INT2 Handler
+    EXT_INT3_IRQHandler,   // 29: EXT_INT3 Handler
+    ADCUI_F03_IRQHandler,  // 30: ADCUI_F03 Handler
+    ADCUI_F1_IRQHandler,   // 31: ADCUI_F1 Handler
+    ADCUI_F2_IRQHandler,   // 32: ADCUI_F2 Handler
+    Unexpected_IRQHandler, // 33: Reserved
+    Unexpected_IRQHandler, // 34: Reserved
+    Unexpected_IRQHandler, // 35: Reserved
+    Unexpected_IRQHandler, // 36: Reserved
+    RANDOM_IRQHandler,     // 37: RANDOM Handler
+    USART_IRQHandler,      // 38: UART ISO7816 (USART) Handler
+    UART3_IRQHandler,      // 39: UART3 Handler
+    SSP2_IRQHandler,       // 40: SSP2 Handler
+    SSP3_IRQHandler,       // 41: SSP3 Handler
+    TIMER3_IRQHandler,     // 42: TIMER3 Handler
+    TIMER4_IRQHandler,     // 43: TIMER4 Handler
+    UART4_IRQHandler       // 44: UART4 Handler
 };
 #endif
 
@@ -129,37 +129,36 @@ __VECTOR_TABLE_ALIGNED IRQHandler_TypeDef InterruptVectorTable[] = {
  * @brief IT external interrupt vector table.
  */
 IRQHandler_TypeDef ExtInterruptVectorTable[] = {
-    Unexpected_IRQHandler,  // 0:  Reserved
-    DMA_IRQHandler,         // 1:  DMA Handler
-    UART1_IRQHandler,       // 2:  UART1 Handler
-    UART2_IRQHandler,       // 3:  UART2 Handler
-    SSP1_IRQHandler,        // 4:  SSP1 Handler
-    POWER_IRQHandler,       // 5:  POWER Handler
-    WWDG_IRQHandler,        // 6:  WWDG Handler
-    TIMER1_IRQHandler,      // 7:  TIMER1 Handler
-    TIMER2_IRQHandler,      // 8:  TIMER2 Handler
-    ADC_IRQHandler,         // 9:  ADC Handler
-    I2C_IRQHandler,         // 10: I2C Handler
-    BKP_IRQHandler,         // 11: BKP Handler
-    EXT_INT1_IRQHandler,    // 12: EXT_INT1 Handler
-    EXT_INT2_IRQHandler,    // 13: EXT_INT2 Handler
-    EXT_INT3_IRQHandler,    // 14: EXT_INT3 Handler
-    ADCIU_F03_IRQHandler,   // 15: ADCIU_F03 Handler
-    ADCIU_F1_IRQHandler,    // 16: ADCIU_F1 Handler
-    ADCIU_F2_IRQHandler,    // 17: ADCIU_F2 Handler
-    L_BLOCK_IRQHandler,     // 18: L_BLOCK Handler
-    Unexpected_IRQHandler,  // 19: Reserved
-    SENSORS_IRQHandler,     // 20: SENSORS Handler
-    CLK_MEASURE_IRQHandler, // 21: CLK_MEASURE Handler
-    RANDOM_IRQHandler,      // 22: RANDOM Handler
-    ISO7816_IRQHandler,     // 23: ISO7816 Handler
-    UART3_IRQHandler,       // 24: UART3 Handler
-    SSP2_IRQHandler,        // 25: SSP2 Handler
-    SSP3_IRQHandler,        // 26: SSP3 Handler
-    TIMER3_IRQHandler,      // 27: TIMER3 Handler
-    TIMER4_IRQHandler,      // 28: TIMER4 Handler
-    UART4_IRQHandler,       // 29: UART4 Handler
-    OTP_IRQHandler          // 30: OTP Handler
+    DMA_IRQHandler,         // 0:  DMA Handler
+    UART1_IRQHandler,       // 1:  UART1 Handler
+    UART2_IRQHandler,       // 2:  UART2 Handler
+    SSP1_IRQHandler,        // 3:  SSP1 Handler
+    POWER_IRQHandler,       // 4:  POWER Handler
+    WWDG_IRQHandler,        // 5:  WWDG Handler
+    TIMER1_IRQHandler,      // 6:  TIMER1 Handler
+    TIMER2_IRQHandler,      // 7:  TIMER2 Handler
+    ADC_IRQHandler,         // 8:  ADC Handler
+    I2C_IRQHandler,         // 9: I2C Handler
+    BKP_IRQHandler,         // 10: BKP Handler
+    EXT_INT1_IRQHandler,    // 11: EXT_INT1 Handler
+    EXT_INT2_IRQHandler,    // 12: EXT_INT2 Handler
+    EXT_INT3_IRQHandler,    // 13: EXT_INT3 Handler
+    ADCUI_F03_IRQHandler,   // 14: ADCUI_F03 Handler
+    ADCUI_F1_IRQHandler,    // 15: ADCUI_F1 Handler
+    ADCUI_F2_IRQHandler,    // 16: ADCUI_F2 Handler
+    L_BLOCK_IRQHandler,     // 17: L_BLOCK Handler
+    Unexpected_IRQHandler,  // 18: Reserved
+    SENSORS_IRQHandler,     // 19: SENSORS Handler
+    CLK_MEASURE_IRQHandler, // 20: CLK_MEASURE Handler
+    RANDOM_IRQHandler,      // 21: RANDOM Handler
+    USART_IRQHandler,       // 22: USART ISO7816 (USART) Handler
+    UART3_IRQHandler,       // 23: UART3 Handler
+    SSP2_IRQHandler,        // 24: SSP2 Handler
+    SSP3_IRQHandler,        // 25: SSP3 Handler
+    TIMER3_IRQHandler,      // 26: TIMER3 Handler
+    TIMER4_IRQHandler,      // 27: TIMER4 Handler
+    UART4_IRQHandler,       // 28: UART4 Handler
+    OTP_IRQHandler          // 29: OTP Handler
 };
 #endif
 
@@ -288,18 +287,18 @@ FlagStatus IT_GetGlobalEnableIRQ(IT_PrivilegeModeIRQ_TypeDef PrivilegeMode)
  * @param  None.
  * @return None.
  */
-__WEAK __INTERRUPT_MACHINE void Trap_IRQHandler(void)
+__WEAK __INTERRUPT_MACHINE __TRAP_HANDLER_ALIGNED void Trap_IRQHandler(void)
 {
     uint32_t ExtInterrupt, MCause;
 
     MCause = csr_read(CSR_MCAUSE);
     if (MCause & CSR_MCAUSE_INTERRUPT) {
-        if (MCause == CSR_MCAUSE_EXCCODE_MEI) {
-            ExtInterrupt = PLIC->ICC;
+        if (MCause == (CSR_MCAUSE_EXCCODE_MEI | CSR_MCAUSE_INTERRUPT)) {
+            ExtInterrupt = PLIC_ClaimIRQ();
             while (ExtInterrupt) {
                 (*ExtInterruptVectorTable[ExtInterrupt])();
-                PLIC->ICC    = ExtInterrupt;
-                ExtInterrupt = PLIC->ICC;
+                PLIC_CompleteIRQ(ExtInterrupt);
+                ExtInterrupt = PLIC_ClaimIRQ();
             }
         } else {
             (*InterruptVectorTable[MCause & CSR_MCAUSE_EXCCODE_Msk])();
@@ -308,6 +307,7 @@ __WEAK __INTERRUPT_MACHINE void Trap_IRQHandler(void)
         (*ExceptionVectorTable[MCause])();
     }
 }
+
 #elif defined(USE_MDR1206)
 /**
  * @brief  CLIC interrupt service routine.
@@ -333,7 +333,7 @@ __WEAK __INTERRUPT_MACHINE __TRAP_HANDLER_ALIGNED void Trap_IRQHandler(void)
  * @param  None.
  * @return None.
  */
-__WEAK void MachineSoftware_IRQHandler(void)
+__WEAK void MSIP_IRQHandler(void)
 {
     while (1) { }
 }
@@ -343,7 +343,7 @@ __WEAK void MachineSoftware_IRQHandler(void)
  * @param  None.
  * @return None.
  */
-__WEAK void MachineTimer_IRQHandler(void)
+__WEAK void MTIP_IRQHandler(void)
 {
     while (1) { }
 }
@@ -354,7 +354,7 @@ __WEAK void MachineTimer_IRQHandler(void)
  * @param  None.
  * @return None.
  */
-__WEAK void UserSoftware_IRQHandler(void)
+__WEAK void USIP_IRQHandler(void)
 {
     while (1) { }
 }
@@ -364,7 +364,7 @@ __WEAK void UserSoftware_IRQHandler(void)
  * @param  None.
  * @return None.
  */
-__WEAK void UserTimer_IRQHandler(void)
+__WEAK void UTIP_IRQHandler(void)
 {
     while (1) { }
 }
@@ -374,7 +374,7 @@ __WEAK void UserTimer_IRQHandler(void)
  * @param  None.
  * @return None.
  */
-__WEAK void CLICSoftware_IRQHandler(void)
+__WEAK void CSIP_IRQHandler(void)
 {
     while (1) { }
 }
@@ -529,7 +529,7 @@ __WEAK void EXT_INT3_IRQHandler(void)
  * @param  None.
  * @return None.
  */
-__WEAK void ADCIU_F1_IRQHandler(void)
+__WEAK void ADCUI_F1_IRQHandler(void)
 {
     while (1) { }
 }
@@ -539,7 +539,7 @@ __WEAK void ADCIU_F1_IRQHandler(void)
  * @param  None.
  * @return None.
  */
-__WEAK void ADCIU_F2_IRQHandler(void)
+__WEAK void ADCUI_F2_IRQHandler(void)
 {
     while (1) { }
 }
@@ -549,7 +549,7 @@ __WEAK void ADCIU_F2_IRQHandler(void)
  * @param  None.
  * @return None.
  */
-__WEAK void ADCIU_F03_IRQHandler(void)
+__WEAK void ADCUI_F03_IRQHandler(void)
 {
     while (1) { }
 }
@@ -607,11 +607,11 @@ __WEAK void RANDOM_IRQHandler(void)
 }
 
 /**
- * @brief  Stub of ISO7816 interrupt handler.
+ * @brief  Stub of UART ISO7816 (USART) interrupt handler.
  * @param  None.
  * @return None.
  */
-__WEAK void ISO7816_IRQHandler(void)
+__WEAK void USART_IRQHandler(void)
 {
     while (1) { }
 }
